@@ -16,7 +16,7 @@ let city = 'Vancouver';
 document.addEventListener("DOMContentLoaded", ()=>{
     setTimeout(() => {
         $(".loader-wrapper").fadeOut("slow");;
-        }, 2000)
+        }, 1000)
     
 });
 

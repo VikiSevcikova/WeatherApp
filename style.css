@@ -152,10 +152,13 @@ body .search-section .search-form .autocomplete .autocomplete-items {
   border-bottom: none;
   border-top: none;
   z-index: 99;
+  height: 90vh;
+  margin-top: 10px;
   /*position the autocomplete items to be the same width as the container:*/
   top: 100%;
   left: 0;
   right: 0;
+  overflow: auto;
 }
 
 body .search-section .search-form .autocomplete .autocomplete-items div {

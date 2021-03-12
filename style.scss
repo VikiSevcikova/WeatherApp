@@ -35,13 +35,7 @@ body{
             position: relative;
             animation: loader 2s infinite ease;
           }
-        //   .loader-inner {
-        //     vertical-align: top;
-        //     display: inline-block;
-        //     width: 100%;
-        //     background-color: #fff;
-        //     animation: loader-inner 2s infinite ease-in;
-        //   }
+       
           @keyframes loader {
             0% { transform: rotate(0deg);}
             25% { transform: rotate(180deg);}
@@ -97,11 +91,13 @@ body{
                     border-bottom: none;
                     border-top: none;
                     z-index: 99;
+                    height: 90vh;
+                    margin-top: 10px;
                     /*position the autocomplete items to be the same width as the container:*/
                     top: 100%;
                     left: 0;
                     right: 0;
-        
+                    overflow: auto;
                     div {
                         padding: 10px;
                         cursor: pointer;
