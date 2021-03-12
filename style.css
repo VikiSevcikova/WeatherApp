@@ -1,0 +1,398 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2f96a3), to(#303e8f));
+  background: linear-gradient(#2f96a3, #303e8f);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-family: 'Raleway', sans-serif;
+}
+
+body h1, body h2, body h3, body h4, body i, body td {
+  text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+body nav {
+  position: relative;
+  text-align: center;
+}
+
+body nav i {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+body nav .title {
+  padding-top: 20px;
+  text-transform: uppercase;
+}
+
+body .search-section {
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(150, 150, 150, 0.2);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  -webkit-transition: visibility 0.3s linear,opacity 0.3s linear;
+  transition: visibility 0.3s linear,opacity 0.3s linear;
+}
+
+body .search-section .search-form {
+  position: relative;
+  padding: 20px 60px 10px 20px;
+  /*when navigating through the items using the arrow keys:*/
+}
+
+body .search-section .search-form .autocomplete {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+body .search-section .search-form .autocomplete .autocomplete-items {
+  position: absolute;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+body .search-section .search-form .autocomplete .autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+body .search-section .search-form .autocomplete .autocomplete-items div:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+body .search-section .search-form .autocomplete .search-label {
+  position: absolute;
+  top: 0;
+  padding: 5px;
+  margin-left: 5px;
+  white-space: nowrap;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transition: -webkit-transform 120ms ease-in;
+  transition: -webkit-transform 120ms ease-in;
+  transition: transform 120ms ease-in;
+  transition: transform 120ms ease-in, -webkit-transform 120ms ease-in;
+  font-weight: bold;
+}
+
+body .search-section .search-form .autocomplete .search #search-text {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 5px 10px;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+body .search-section .search-form .autocomplete .search #search-text:focus {
+  outline: none;
+}
+
+body .search-section .search-form .autocomplete .search #search-text:focus + .search-label, body .search-section .search-form .autocomplete .search #search-text:not(:placeholder-shown) + .search-label {
+  -webkit-transform: translate(0.25rem, -65%) scale(0.8);
+          transform: translate(0.25rem, -65%) scale(0.8);
+}
+
+body .search-section .search-form .autocomplete-active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff;
+}
+
+body .popup-section {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(250, 250, 250, 0.2);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  -webkit-transition: visibility 0.3s linear,opacity 0.3s linear;
+  transition: visibility 0.3s linear,opacity 0.3s linear;
+}
+
+body .popup-section .popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: rgba(137, 24, 24, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  -webkit-box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+body .popup-section .popup .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 30px;
+  cursor: pointer;
+  text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+}
+
+body .content {
+  z-index: 0;
+}
+
+body .content .today-card {
+  width: 20vw;
+  height: 70vh;
+  margin: 50px 30px;
+  padding: 10px;
+  overflow: hidden;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  float: left;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+}
+
+body .content .today-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  /* This will produce the blur */
+}
+
+body .content .today-card #temp-section {
+  margin: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+body .content .today-card #temp-section #degree {
+  font-size: 6vh;
+}
+
+body .content .today-card #temp-section #unit {
+  font-size: 5vh;
+  margin-left: 5px;
+}
+
+body .content .today-card #desc {
+  text-transform: uppercase;
+  font-size: 3vh;
+}
+
+body .content .today-card #min-max {
+  font-size: 2.5vh;
+}
+
+body .more-section {
+  position: absolute;
+  top: 98%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  background: #111631;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+body .more-section svg {
+  position: absolute;
+  top: -50px;
+  left: 0;
+}
+
+body .more-section i {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  cursor: pointer;
+  font-size: 21px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+body .more-section i:hover {
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  font-size: 22px;
+}
+
+body .more-section .info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 1;
+  width: 50%;
+  margin: auto;
+  padding: 50px;
+  color: rgba(47, 149, 163, 0.864);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+body .more-section .info table {
+  border-collapse: collapse;
+}
+
+body .more-section .info table tbody tr {
+  line-height: 1.8rem;
+  border-bottom: 1px solid white;
+  margin: 10px;
+}
+
+body .more-section .info table tbody tr td::before {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+body .more-section .info table tbody tr #sunrise::before {
+  content: 'Sunrise';
+}
+
+body .more-section .info table tbody tr #sunset::before {
+  content: 'Sunset';
+}
+
+body .more-section .info table tbody tr #pressure::before {
+  content: 'Pressure';
+}
+
+body .more-section .info table tbody tr #humidity::before {
+  content: 'Humidity';
+}
+
+body .more-section .info table tbody tr #wind::before {
+  content: 'Wind';
+}
+
+body .more-section .info table tbody tr #feels-like::before {
+  content: 'Feels Like';
+}
+
+@media only screen and (max-width: 800px) {
+  body .content .today-card {
+    width: 50vw;
+    height: 50vh;
+  }
+  body .content svg {
+    top: -30px;
+  }
+  body .content .info {
+    width: 65%;
+  }
+}
+/*# sourceMappingURL=style.css.map */
