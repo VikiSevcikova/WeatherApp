@@ -13,6 +13,13 @@ let tempSection = document.getElementById('temp-section');
 let isCelsius = true;
 let city = 'Vancouver';
 
+document.addEventListener("DOMContentLoaded", ()=>{
+    setTimeout(() => {
+        $(".loader-wrapper").fadeOut("slow");;
+        }, 2000)
+    
+});
+
 window.addEventListener('load', () => {
     fetchAPI(false, city);
     // setInterval(() => {
@@ -226,7 +233,7 @@ function autocomplete(inp, arr) {
         if (!val) { return false;}
         currentFocus = -1;
         /*create a DIV element that will contain the items (values):*/
-        a = document.createElement("DIV");
+        a = document.createElement("div");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
         /*append the DIV element as a child of the autocomplete container:*/
@@ -236,7 +243,7 @@ function autocomplete(inp, arr) {
           /*check if the item starts with the same letters as the text field value:*/
           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
             /*create a DIV element for each matching element:*/
-            b = document.createElement("DIV");
+            b = document.createElement("div");
             /*make the matching letters bold:*/
             b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
             b.innerHTML += arr[i].substr(val.length);

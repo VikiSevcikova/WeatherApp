@@ -4,13 +4,16 @@
         <title>Weather App</title>
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <script src="https://kit.fontawesome.com/90a8f3d511.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 
     </head>
 
     <body>
+        <div class="loader-wrapper">
+            <i class="loader fas fa-sun"></i>
+        </div>
         <nav>
             <i class="search-icon fas fa-search"></i>
             <h1 class="title">Weather App</h1>
@@ -41,14 +44,14 @@
         <div class="content">
             <div class="today-card">
                 <canvas class="icon" width="128" height="128"></canvas>
-                <h2 id="location">Vancouver</h2>
-                <h4 id="date">Tuesday 03/09/2021</h4>
+                <h2 id="location"></h2>
+                <h4 id="date"></h4>
                 <div id="temp-section">
                     <h1 id="degree"></h1>
-                    <h1 id="unit">°C</h1>
+                    <h1 id="unit"></h1>
                 </div>
-                <h3 id="desc">Sunny</h3>
-                <h4 id="min-max">9/12</h4>
+                <h3 id="desc"></h3>
+                <h4 id="min-max"></h4>
             </div>
             
             <div class=" more-section">

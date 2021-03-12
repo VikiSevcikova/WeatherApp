@@ -7,7 +7,7 @@
 body{
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(rgb(47,150,163), rgb(48,62,143));
+    background: #111631bb;
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
@@ -17,6 +17,39 @@ body{
         text-shadow: 0px 0px 12px rgba(0, 0, 0, .3);
         color: white;
     }
+
+    .loader-wrapper {
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #242f3f;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        .loader {
+            display: inline-block;
+            font-size: 100px;
+            position: relative;
+            animation: loader 2s infinite ease;
+          }
+        //   .loader-inner {
+        //     vertical-align: top;
+        //     display: inline-block;
+        //     width: 100%;
+        //     background-color: #fff;
+        //     animation: loader-inner 2s infinite ease-in;
+        //   }
+          @keyframes loader {
+            0% { transform: rotate(0deg);}
+            25% { transform: rotate(180deg);}
+            50% { transform: rotate(180deg);}
+            75% { transform: rotate(360deg);}
+            100% { transform: rotate(360deg);}
+          }
+      }
 
     nav{
         position: relative;
@@ -120,11 +153,11 @@ body{
                   }
     
               }
-                 /*when navigating through the items using the arrow keys:*/
-                 .autocomplete-active {
-                    background-color: rgba(255, 255, 255, 0.2) !important; 
-                    color: #ffffff; 
-                  }
+                /*when navigating through the items using the arrow keys:*/
+                .autocomplete-active {
+                background-color: rgba(255, 255, 255, 0.2) !important; 
+                color: #ffffff; 
+                }
 
             
         }
@@ -243,6 +276,9 @@ body{
             position: absolute;
             top:-50px;
             left: 0;
+            path{
+                box-shadow: 0 0 80px rgba(255, 255, 255, 0.2);
+            }
         }
 
         i{
