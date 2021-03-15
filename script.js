@@ -95,7 +95,7 @@ function fillInfo(data){
     let sunset = new Date((data.sys.sunset-offset)*1000);
     // sunset.timezone = data.timezone;
     let values = {"sunrise" : `${sunrise.toLocaleTimeString()}`,
-                "sunset" : `${sunset.toLocaleTimeString("en-US", {timezone: data.timezone})} `,
+                "sunset" : `${sunset.toLocaleTimeString()} `,
                 "feels-like" : data.main.feels_like,
                 "wind" : `${data.wind.speed} m/s`,
                 "pressure" :  `${data.main.pressure} hPa`,
