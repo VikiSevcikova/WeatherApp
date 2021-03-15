@@ -93,7 +93,6 @@ body{
                     z-index: 99;
                     height: 90vh;
                     margin-top: 10px;
-                    /*position the autocomplete items to be the same width as the container:*/
                     top: 100%;
                     left: 0;
                     right: 0;
@@ -149,12 +148,6 @@ body{
                   }
     
               }
-                /*when navigating through the items using the arrow keys:*/
-                .autocomplete-active {
-                background-color: rgba(255, 255, 255, 0.2) !important; 
-                color: #ffffff; 
-                }
-
             
         }
     }
