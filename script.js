@@ -89,11 +89,13 @@ function setIcon(id, icon){
 }
 
 function fillInfo(data){
-    let d = new Date();
-    console.log(d.getTimezoneOffset());
-    console.log(data.timezone);
-    let values = {"sunrise" : `${new Date(data.sys.sunrise*1000).toLocaleTimeString()}`,
-                "sunset" : `${new Date(data.sys.sunset*1000).toLocaleTimeString()} `,
+    let offset = new Date().getTimezoneOffset()*60000 - data.timezone;
+    let sunrise = new Date((data.sys.sunrise-offset)*1000);
+    // sunrise.timezone = data.timezone;
+    let sunset = new Date((data.sys.sunset-offset)*1000);
+    // sunset.timezone = data.timezone;
+    let values = {"sunrise" : `${sunrise.toLocaleTimeString()}`,
+                "sunset" : `${sunset.toLocaleTimeString("en-US", {timezone: data.timezone})} `,
                 "feels-like" : data.main.feels_like,
                 "wind" : `${data.wind.speed} m/s`,
                 "pressure" :  `${data.main.pressure} hPa`,
@@ -236,7 +238,6 @@ window.addEventListener('keypress', (e) => {
     }
 })
 
-//Autocomplete
 function autocomplete(inp, arr) {
     //two arguments: the text field element and an array of possible autocompleted values:
     inp.addEventListener("input", function(e) {
@@ -249,7 +250,7 @@ function autocomplete(inp, arr) {
         list.setAttribute("id", this.id + "autocomplete-list");
         list.setAttribute("class", "autocomplete-items");
         //append the DIV element as a child of the autocomplete container:
-        this.parentNode.appendChild(a);
+        this.parentNode.appendChild(list);
         
         for (i = 0; i < arr.length; i++) {
           //check if the item starts with the same letters as the text field value:
