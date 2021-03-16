@@ -288,7 +288,6 @@ body{
             display: flex;
             flex-direction: column;
             justify-content: center;
-            // align-items: center;
             z-index: 1;
             width: 50%;
             margin: auto;
@@ -296,7 +295,7 @@ body{
             color: rgba(47, 149, 163, 0.864);
             font-size: 1.5rem;
             font-weight: bold;
-
+            visibility: hidden;
             table{
                 border-collapse: collapse; 
                 tbody{

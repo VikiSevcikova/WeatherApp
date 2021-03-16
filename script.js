@@ -196,6 +196,7 @@ function showPopup(city){
 
 
 let moreSection = document.querySelector('.more-section');
+let info = document.querySelector('.info');
 let chevron = document.querySelector('.chevron');
 //change the position of the 'more' section and also the icon 
 moreSection.addEventListener('click', (e) => {
@@ -204,11 +205,14 @@ moreSection.addEventListener('click', (e) => {
         chevron.classList.remove('fa-chevron-up');
         chevron.classList.add('fa-chevron-down');
         searchIcon.style.pointerEvents = "none";
+        info.style.visibility = 'visible';
     }else{
         moreSection.style.top = '98%';
         chevron.classList.remove('fa-chevron-down');
         chevron.classList.add('fa-chevron-up');
         searchIcon.style.pointerEvents = "all";
+        info.style.visibility = 'hidden';
+
     }
 });
 

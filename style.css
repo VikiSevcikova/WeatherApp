@@ -414,6 +414,7 @@ body .more-section .info {
   color: rgba(47, 149, 163, 0.864);
   font-size: 1.5rem;
   font-weight: bold;
+  visibility: hidden;
 }
 
 body .more-section .info table {
