@@ -23,17 +23,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 window.addEventListener('load', () => {
     fetchAPI(false, city);
-    // setInterval(() => {
-    //     console.log('UPDATE');
-    // console.log(city);
+    setInterval(() => {
+        console.log('UPDATE');
+    console.log(city);
 
-    //     fetchAPI(true, city);
-    // }, 120000);
+        fetchAPI(true, city);
+    }, 120000);
 });
 
 //two arguments: update - because of unit change, and city
 function fetchAPI(update = false, city){
-    const apikey = '0a7e7f9075784501a4b3d8f31e73588a';
+    const apikey = config.API_KEY;
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${city.replace(' ','').toLowerCase()}&appid=${apikey}`;
     console.log(api);
     fetch(api)
