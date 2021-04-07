@@ -12,7 +12,6 @@ let weekday = weekdays[new Date().getDay()-1];
 let tempSection = document.getElementById('temp');
 //when the temperature is clicked => change the unit, also in the 'more' section
 tempSection.addEventListener('click', () => {
-    console.log('click');
     setTemperature();
 })
 
@@ -30,9 +29,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 window.addEventListener('load', () => {
     fetchAPI(city);
     setInterval(() => {
-        console.log('UPDATE');
-        console.log(city);
-
         fetchAPI(city);
     }, 120000);
 });
@@ -41,7 +37,6 @@ window.addEventListener('load', () => {
 function fetchAPI(city){
     const apikey = config.API_KEY;
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${city.replace(' ','').toLowerCase()}&appid=${apikey}&units=metric`;
-    console.log(api);
     fetch(api)
     .then(response => {
         //if the response code is different from 200 the popup message opens 
@@ -71,10 +66,8 @@ function setCurrentWeather(data){
 
     //set weather icon based on the currentWeather.icon code from the api, in icon.js is the mapping for icons
     setIcon(icons.get(currentWeather.icon).name, icon);
-    console.log(icons.get(currentWeather.icon).bg);
     //bg image is also different based on the currentWeather.icon
     body.style.backgroundImage = `url('${icons.get(currentWeather.icon).bg}')`;
-
     //set the location
     loc.textContent = `${data.name}, ${data.sys.country}`;
     //set the week day and the date
@@ -90,7 +83,6 @@ function setCurrentWeather(data){
 function setForecastWeather(){
     const apikey = config.API_KEY;
     const api = `https://api.openweathermap.org/data/2.5/forecast?q=${city.replace(' ','').toLowerCase()}&appid=${apikey}&units=metric`;
-    console.log(api);
     fetch(api)
     .then(response => {
         //if the response code is different from 200 the popup message opens 
@@ -230,11 +222,10 @@ searchIcon.addEventListener('click', (e) => {
     }else{
         openSearchSection();
     }
-    console.log(searchSection.style.visibility);
 })
 
 function closeSearchSection(){
-    body.style.overflow = 'none';
+    body.style.overflow = 'auto';
     title.style.visibility = 'visible';    
     searchSection.style.visibility = 'hidden';
     searchSection.style.opacity = 0;
@@ -313,7 +304,6 @@ window.addEventListener('keypress', (e) => {
         let input = document.getElementById('search-text');
         city = input.value;
         input.value = '';
-        console.log(city);
         fetchAPI(city);
         closeSearchSection();
     }
