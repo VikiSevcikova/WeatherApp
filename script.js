@@ -1,8 +1,9 @@
-let body = document.querySelector('body');
-let icon = document.querySelector('.icon');
-let loc = document.getElementById('location');
-let date = document.getElementById('date');
-let desc = document.getElementById('desc');
+const body = document.querySelector('body');
+const icon = document.querySelector('.icon');
+const loc = document.getElementById('location');
+const date = document.getElementById('date');
+const desc = document.getElementById('desc');
+const slider = document.querySelector(".slider");
 
 let today = new Date().toLocaleDateString();
 let weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Monday', 'Saturday', 'Sunday'];
@@ -23,12 +24,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 window.addEventListener('load', () => {
     fetchAPI(false, city);
-    setInterval(() => {
-        console.log('UPDATE');
-    console.log(city);
+    // setInterval(() => {
+    //     console.log('UPDATE');
+    //     console.log(city);
 
-        fetchAPI(true, city);
-    }, 120000);
+    //     fetchAPI(true, city);
+    // }, 120000);
 });
 
 //two arguments: update - because of unit change, and city
@@ -55,6 +56,11 @@ function fetchAPI(update = false, city){
 }
 
 function setElements(data, update = false){
+    setCurrentWeather(data,update);
+    setForecastWeather();
+}
+
+function setCurrentWeather(data,update){
     //get todays weather
     const currentWeather = data.weather[0];
 
@@ -77,9 +83,67 @@ function setElements(data, update = false){
     //when the temperature is clicked => change the unit, also in the 'more' section
     tempSection.addEventListener('click', () => {
         console.log('click');
-        checkUnit(data.main, update);
+        setTemperature();
     })
+}
 
+function setForecastWeather(){
+    const apikey = config.API_KEY;
+    const api = `https://api.openweathermap.org/data/2.5/forecast?q=${city.replace(' ','').toLowerCase()}&appid=${apikey}`;
+    console.log(api);
+    fetch(api)
+    .then(response => {
+        //if the response code is different from 200 the popup message opens 
+        if(response.status !== 200){
+            console.log('There is an issue. Status code:' + response.status);
+            showPopup(city);
+            return;
+        }
+        return response.json();
+    }).then(data => {
+        //if there is data is not empty then set elements 
+        slider.innerHTML = '';
+        if(data) data.list.map((d) => createCard(d))
+    })
+    .catch(e => {
+        console.log('Fetch error: ' + e);
+    })
+}
+
+function createCard(forecast){
+    const {main, weather} = forecast
+    let date = new Date(forecast.dt*1000).toLocaleDateString(navigator.language);
+    let time = new Date(forecast.dt*1000).toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute:'2-digit'
+      });
+    const card = document.createElement('div');
+    card.classList.add("card");
+
+    const iconCanvas = document.createElement('canvas');
+    iconCanvas.classList.add("icon");
+    iconCanvas.id = weather[0].icon;
+    iconCanvas.style.width  =  "128px";
+    iconCanvas.style.height  = "80px";
+    setIcon(icons.get(weather[0].icon).name, iconCanvas);
+
+    card.appendChild(iconCanvas);
+    const weatherDetails = document.createElement('div');
+    weatherDetails.classList.add('weather-details');
+
+    weatherDetails.innerHTML = `<h4 id="date">${date}</h4>
+    <h4 id="date">${time}</h4>
+    <div id="temp-section">
+        <h1 class="temperature" id="degree">${isCelsius ? Math.round(main.temp-273.15) : Math.round(main.temp * 9/5 - 459.67)} °C </h1>
+    </div>
+    <h3 id="desc">${weather[0].main}</h3>
+    <div id="temp-section">
+        <h4 class="temperature" id="min">${isCelsius ? Math.round(main.temp_min-273.15) + ' °C' : Math.round(main.temp_min * 9/5 - 459.67) + ' °F'}</h4>
+        <h4> / </h4>
+        <h4 class="temperature" id="max">${ isCelsius ? Math.round(main.temp_max-273.15) + ' °C' : Math.round(main.temp_max * 9/5 - 459.67) +' °F'}</h4>
+    </div>`;
+    card.appendChild(weatherDetails);
+    slider.appendChild(card);
 }
 
 function setIcon(id, icon){
@@ -89,13 +153,16 @@ function setIcon(id, icon){
 }
 
 function fillInfo(data){
-    let offset = new Date().getTimezoneOffset()*60000 - data.timezone;
-    let sunrise = new Date((data.sys.sunrise-offset)*1000);
-    // sunrise.timezone = data.timezone;
-    let sunset = new Date((data.sys.sunset-offset)*1000);
-    // sunset.timezone = data.timezone;
-    let values = {"sunrise" : `${sunrise.toLocaleTimeString()}`,
-                "sunset" : `${sunset.toLocaleTimeString()} `,
+    let sunrise = new Date(data.sys.sunrise*1000).toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute:'2-digit'
+      });
+      let sunset = new Date(data.sys.sunset*1000).toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute:'2-digit'
+      });
+    let values = {"sunrise" : `${sunrise}`,
+                "sunset" : `${sunset} `,
                 "feels-like" : data.main.feels_like,
                 "wind" : `${data.wind.speed} m/s`,
                 "pressure" :  `${data.main.pressure} hPa`,
@@ -111,37 +178,42 @@ function fillInfo(data){
 function checkUnit(data, update){
     let degree = document.getElementById('degree');
     let unit = document.getElementById('unit');
-    let minMax = document.getElementById('min-max');
+    let min = document.getElementById('min');
+    let max = document.getElementById('max');
     let feelslike = document.getElementById('feels-like');
 
-    let temps = {"degree":degree, "unit":unit, "minMax":minMax, "feelslike":feelslike};
+    let temps = {"degree":degree, "unit":unit, "max":max, "min":min, "feelslike":feelslike};
 
-    if(update){
-        isCelsius ? setCelsius(data, temps) : setFarenheit(data, temps);
-    }else{
-        if(isCelsius){
-            isCelsius = false;
-            setFarenheit(data, temps);
-        }else{
-            isCelsius = true;
-            setCelsius(data, temps);
-        }
+    setTempData(data, temps);
+}
+
+function setTemperature(){
+    const temperatures = document.querySelectorAll(".temperature");
+    console.log(isCelsius);
+    for(temperature of temperatures){
+        isCelsius ? setFarenheit(temperature) : setCelsius(temperature);
     }
-   
+    isCelsius ? isCelsius = false : isCelsius = true;
+    // temperatures.map(temperature => {
+    //     isCelsius ? setFarenheit(temperature.textContent) : setFarenheit(temperature.textContent);
+    // });
 }
 
-function setCelsius(data, temps){
-    temps["unit"].textContent = '°C';
-    temps["degree"].textContent = Math.round(data.temp-273.15);
-    temps["minMax"].textContent = `${Math.round(data.temp_min-273.15)} °C / ${Math.round(data.temp_max-273.15)} °C`;
-    temps["feelslike"].textContent = `${Math.round(data.feels_like-273.15)} °C `;
+function setCelsius(temperature){
+    let t = temperature.textContent.split('°')[0];
+    temperature.textContent = Math.round((t - 32) * 0.5556) + '°C';
 }
 
-function setFarenheit(data, temps){
-    temps["unit"].textContent = '°F';
-    temps["degree"].textContent = Math.round(data.temp * 9/5 - 459.67);
-    temps["minMax"].textContent = `${Math.round(data.temp_min * 9/5 - 459.67)} °F / ${Math.round(data.temp_max * 9/5 - 459.67)} °F`;
-    temps["feelslike"].textContent = `${Math.round(data.feels_like * 9/5 - 459.67)} °F`;
+function setFarenheit(temperature){
+    let t = temperature.textContent.split('°')[0];
+    temperature.textContent =  Math.round((t * 1.8) + 32) + '°F';
+}
+
+function setTempData(data, temps){
+    temps["degree"].textContent = Math.round(data.temp-273.15) + '°C';
+    temps["min"].textContent = Math.round(data.temp_min-273.15) + '°C';
+    temps["max"].textContent = Math.round(data.temp_max-273.15) + '°C';
+    temps["feelslike"].textContent = Math.round(data.feels_like-273.15) + '°C';
 }
 
 let title = document.querySelector('.title');
@@ -271,7 +343,8 @@ function autocomplete(inp, arr) {
                 //insert the value for the autocomplete text field:
                 inp.value = this.getElementsByTagName("input")[0].value;
                 //call fetchAPI function to get the item/city
-                fetchAPI(true, inp.value);
+                city = inp.value;
+                fetchAPI(true, city);
                 inp.value = '';
                 //close the list of autocompleted values, (or any other open lists of autocompleted values)
                 closeAllLists();

@@ -47,13 +47,21 @@
                 <h2 id="location"></h2>
                 <h4 id="date"></h4>
                 <div id="temp-section">
-                    <h1 id="degree"></h1>
-                    <h1 id="unit"></h1>
+                    <h1 class="temperature" id="degree"></h1>
                 </div>
                 <h3 id="desc"></h3>
-                <h4 id="min-max"></h4>
+                <div id="temp-section">
+                    <h4 class="temperature" id="min"></h4>
+                    <h4> / </h4>
+                    <h4 class="temperature" id="max"></h4>
+                </div>
             </div>
             
+            <div class="slider">
+     
+            </div>
+
+
             <div class=" more-section">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 80 1440 300">
                     <path fill="#111631" fill-opacity="1" d="M0,128L80,128C160,128,320,128,480,117.3C640,107,800,85,960,85.3C1120,85,1280,107,1360,117.3L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
@@ -65,7 +73,7 @@
                         <tbody>
                             <tr><td id='sunrise'></td> <td id='sunset'></td></tr>
                             <tr><td id='pressure'></td> <td id='humidity'></td></tr>
-                            <tr><td id='wind'></td> <td id='feels-like'></td></tr>
+                            <tr><td id='wind'></td> <td class='temperature' id='feels-like'></td></tr>
                         </tbody>
                     </table>
                 </div>

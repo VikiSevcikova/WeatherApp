@@ -12,6 +12,10 @@ body {
   background-size: cover;
   color: white;
   font-family: 'Raleway', sans-serif;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
 }
 
 body h1, body h2, body h3, body h4, body i, body td {
@@ -264,6 +268,9 @@ body .popup-section .popup .close-btn {
 }
 
 body .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   z-index: 0;
 }
 
@@ -344,7 +351,104 @@ body .content .today-card #min-max {
   font-size: 2.5vh;
 }
 
-body .more-section {
+body .content .slider {
+  max-width: 1250px;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+body .content .slider .card {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin: 10px 20px;
+  padding: 10px;
+  width: 250px;
+  height: 200px;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  float: left;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+}
+
+body .content .slider .card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  /* This will produce the blur */
+}
+
+body .content .slider .card #temp-section {
+  margin: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+body .content .slider .card #temp-section #degree {
+  font-size: 4vh;
+}
+
+body .content .slider .card #desc {
+  text-transform: uppercase;
+  font-size: 2vh;
+}
+
+body .content .slider .card .weather-details {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .content .more-section {
   position: absolute;
   top: 98%;
   left: 0;
@@ -367,20 +471,20 @@ body .more-section {
   transition: all 0.5s ease-in-out;
 }
 
-body .more-section svg {
+body .content .more-section svg {
   position: absolute;
-  top: -50px;
+  top: -70px;
   left: 0;
 }
 
-body .more-section svg path {
+body .content .more-section svg path {
   -webkit-box-shadow: 0 0 80px rgba(255, 255, 255, 0.2);
           box-shadow: 0 0 80px rgba(255, 255, 255, 0.2);
 }
 
-body .more-section i {
+body .content .more-section i {
   position: absolute;
-  top: -15px;
+  top: -30px;
   left: 50%;
   -webkit-transform: translate(-50%);
           transform: translate(-50%);
@@ -390,13 +494,13 @@ body .more-section i {
   transition: all 0.5s ease-in-out;
 }
 
-body .more-section i:hover {
+body .content .more-section i:hover {
   -webkit-transform: translate(-50%);
           transform: translate(-50%);
   font-size: 22px;
 }
 
-body .more-section .info {
+body .content .more-section .info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -408,65 +512,95 @@ body .more-section .info {
       -ms-flex-pack: center;
           justify-content: center;
   z-index: 1;
-  width: 50%;
+  width: 50vw;
   margin: auto;
-  padding: 50px;
   color: rgba(47, 149, 163, 0.864);
   font-size: 1.5rem;
   font-weight: bold;
   visibility: hidden;
 }
 
-body .more-section .info table {
+body .content .more-section .info table {
   border-collapse: collapse;
 }
 
-body .more-section .info table tbody tr {
+body .content .more-section .info table tbody tr {
   line-height: 1.8rem;
   border-bottom: 1px solid white;
   margin: 10px;
 }
 
-body .more-section .info table tbody tr td::before {
+body .content .more-section .info table tbody tr td::before {
   display: block;
   text-transform: uppercase;
   font-size: 0.8rem;
 }
 
-body .more-section .info table tbody tr #sunrise::before {
+body .content .more-section .info table tbody tr #sunrise::before {
   content: 'Sunrise';
 }
 
-body .more-section .info table tbody tr #sunset::before {
+body .content .more-section .info table tbody tr #sunset::before {
   content: 'Sunset';
 }
 
-body .more-section .info table tbody tr #pressure::before {
+body .content .more-section .info table tbody tr #pressure::before {
   content: 'Pressure';
 }
 
-body .more-section .info table tbody tr #humidity::before {
+body .content .more-section .info table tbody tr #humidity::before {
   content: 'Humidity';
 }
 
-body .more-section .info table tbody tr #wind::before {
+body .content .more-section .info table tbody tr #wind::before {
   content: 'Wind';
 }
 
-body .more-section .info table tbody tr #feels-like::before {
+body .content .more-section .info table tbody tr #feels-like::before {
   content: 'Feels Like';
 }
 
+body ::-webkit-scrollbar {
+  width: 15px;
+}
+
+body ::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+          box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 @media only screen and (max-width: 1100px) {
+  body .content {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
   body .content .today-card {
     width: 50vw;
-    height: 50vh;
-  }
-  body .content svg {
-    top: -30px;
+    height: 40vh;
   }
   body .content .info {
-    width: 70%;
+    width: 80vw;
+  }
+  body .content .slider {
+    width: 90vw;
+  }
+  body .content .more-section svg {
+    top: -30px;
+  }
+  body .content .more-section i {
+    top: -15px;
   }
 }
 /*# sourceMappingURL=style.css.map */
