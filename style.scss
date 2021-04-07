@@ -5,11 +5,12 @@
 }
 
 body{
-    height: 100vh;
-    overflow: hidden;
+    position: relative;
+    height: 100%;
     background: #111631bb;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
     color: white;
     font-family: 'Raleway', sans-serif;
 
@@ -21,7 +22,7 @@ body{
     .loader-wrapper {
         z-index: 10;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         position: absolute;
         top: 0;
         left: 0;
@@ -72,7 +73,7 @@ body{
         overflow: hidden;
         top:0;
         left: 0;
-        width: 100vw;
+        width: 100%;
         height: 100vh;
         background: rgba(150, 150, 150, 0.2);
         backdrop-filter: blur(20px);
@@ -197,7 +198,7 @@ body{
         z-index: 0;
         .today-card{
             width: 20vw;
-            height: 70vh;
+            height: 500px;
             margin: 50px 30px;
             padding: 10px;
             overflow: hidden;
@@ -222,7 +223,7 @@ body{
                 backdrop-filter: blur(5px);  /* This will produce the blur */
             }
            
-            #temp-section{
+            .temp-section{
                 margin: 10px;
                 display: flex;
                 flex-direction: row;
@@ -248,7 +249,7 @@ body{
             }
         }
         .slider{
-            max-width: 1250px;
+            width: 50vw;
             margin: auto;
             display: flex;
             overflow-x: auto;
@@ -270,7 +271,6 @@ body{
                 border-radius: 25px;
                 background: rgba(255, 255, 255, 0.2);
                 border: 2px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
                 &::before{
                     content: '';
                     position: absolute;
@@ -282,21 +282,16 @@ body{
                     backdrop-filter: blur(5px);  /* This will produce the blur */
                 }
                 
-                #temp-section{
+                .temp-section{
                     margin: 10px;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
-                    cursor: pointer;
-                    #degree{
-                        font-size: 4vh;
-                    }
                 }
                
                 #desc{
                     text-transform: uppercase;
-                    font-size: 2vh;
                 }
 
                 .weather-details{
@@ -307,8 +302,10 @@ body{
                 }
             }
         }
-        .more-section{
-        position: absolute;
+
+    }
+    .more-section{
+        position: fixed;
         top: 98%;
         left: 0;
         right: 0;
@@ -403,7 +400,6 @@ body{
             }
         }
     }
-    }
 
     /* width */
     ::-webkit-scrollbar {
@@ -432,23 +428,23 @@ body{
             flex-direction: column;
             .today-card{
                 width: 50vw;
-                height: 40vh;
+                height: 320px;
             }
             .info{
                 width: 80vw;
             }
             .slider{
                 width: 90vw;
+                margin-bottom: 50px;
             }
-            .more-section{
-                svg{
-                    top:-30px;
-                }
-                i{
-                    top: -15px;
-                }
+        }
+        .more-section{
+            svg{
+                top:-30px;
             }
-
+            i{
+                top: -15px;
+            }
         }
       }
 

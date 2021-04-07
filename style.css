@@ -5,11 +5,12 @@
 }
 
 body {
-  height: 100vh;
-  overflow: hidden;
+  position: relative;
+  height: 100%;
   background: #111631bb;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   color: white;
   font-family: 'Raleway', sans-serif;
   /* width */
@@ -26,7 +27,7 @@ body h1, body h2, body h3, body h4, body i, body td {
 body .loader-wrapper {
   z-index: 10;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
@@ -130,7 +131,7 @@ body .search-section {
   overflow: hidden;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background: rgba(150, 150, 150, 0.2);
   -webkit-backdrop-filter: blur(20px);
@@ -276,7 +277,7 @@ body .content {
 
 body .content .today-card {
   width: 20vw;
-  height: 70vh;
+  height: 500px;
   margin: 50px 30px;
   padding: 10px;
   overflow: hidden;
@@ -315,7 +316,7 @@ body .content .today-card::before {
   /* This will produce the blur */
 }
 
-body .content .today-card #temp-section {
+body .content .today-card .temp-section {
   margin: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -333,11 +334,11 @@ body .content .today-card #temp-section {
   cursor: pointer;
 }
 
-body .content .today-card #temp-section #degree {
+body .content .today-card .temp-section #degree {
   font-size: 6vh;
 }
 
-body .content .today-card #temp-section #unit {
+body .content .today-card .temp-section #unit {
   font-size: 5vh;
   margin-left: 5px;
 }
@@ -352,7 +353,7 @@ body .content .today-card #min-max {
 }
 
 body .content .slider {
-  max-width: 1250px;
+  width: 50vw;
   margin: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -388,8 +389,6 @@ body .content .slider .card {
   border-radius: 25px;
   background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  -webkit-box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
 }
 
 body .content .slider .card::before {
@@ -405,7 +404,7 @@ body .content .slider .card::before {
   /* This will produce the blur */
 }
 
-body .content .slider .card #temp-section {
+body .content .slider .card .temp-section {
   margin: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -420,16 +419,10 @@ body .content .slider .card #temp-section {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  cursor: pointer;
-}
-
-body .content .slider .card #temp-section #degree {
-  font-size: 4vh;
 }
 
 body .content .slider .card #desc {
   text-transform: uppercase;
-  font-size: 2vh;
 }
 
 body .content .slider .card .weather-details {
@@ -448,8 +441,8 @@ body .content .slider .card .weather-details {
           flex-direction: column;
 }
 
-body .content .more-section {
-  position: absolute;
+body .more-section {
+  position: fixed;
   top: 98%;
   left: 0;
   right: 0;
@@ -471,18 +464,18 @@ body .content .more-section {
   transition: all 0.5s ease-in-out;
 }
 
-body .content .more-section svg {
+body .more-section svg {
   position: absolute;
   top: -70px;
   left: 0;
 }
 
-body .content .more-section svg path {
+body .more-section svg path {
   -webkit-box-shadow: 0 0 80px rgba(255, 255, 255, 0.2);
           box-shadow: 0 0 80px rgba(255, 255, 255, 0.2);
 }
 
-body .content .more-section i {
+body .more-section i {
   position: absolute;
   top: -30px;
   left: 50%;
@@ -494,13 +487,13 @@ body .content .more-section i {
   transition: all 0.5s ease-in-out;
 }
 
-body .content .more-section i:hover {
+body .more-section i:hover {
   -webkit-transform: translate(-50%);
           transform: translate(-50%);
   font-size: 22px;
 }
 
-body .content .more-section .info {
+body .more-section .info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -520,43 +513,43 @@ body .content .more-section .info {
   visibility: hidden;
 }
 
-body .content .more-section .info table {
+body .more-section .info table {
   border-collapse: collapse;
 }
 
-body .content .more-section .info table tbody tr {
+body .more-section .info table tbody tr {
   line-height: 1.8rem;
   border-bottom: 1px solid white;
   margin: 10px;
 }
 
-body .content .more-section .info table tbody tr td::before {
+body .more-section .info table tbody tr td::before {
   display: block;
   text-transform: uppercase;
   font-size: 0.8rem;
 }
 
-body .content .more-section .info table tbody tr #sunrise::before {
+body .more-section .info table tbody tr #sunrise::before {
   content: 'Sunrise';
 }
 
-body .content .more-section .info table tbody tr #sunset::before {
+body .more-section .info table tbody tr #sunset::before {
   content: 'Sunset';
 }
 
-body .content .more-section .info table tbody tr #pressure::before {
+body .more-section .info table tbody tr #pressure::before {
   content: 'Pressure';
 }
 
-body .content .more-section .info table tbody tr #humidity::before {
+body .more-section .info table tbody tr #humidity::before {
   content: 'Humidity';
 }
 
-body .content .more-section .info table tbody tr #wind::before {
+body .more-section .info table tbody tr #wind::before {
   content: 'Wind';
 }
 
-body .content .more-section .info table tbody tr #feels-like::before {
+body .more-section .info table tbody tr #feels-like::before {
   content: 'Feels Like';
 }
 
@@ -588,18 +581,19 @@ body ::-webkit-scrollbar-thumb:hover {
   }
   body .content .today-card {
     width: 50vw;
-    height: 40vh;
+    height: 320px;
   }
   body .content .info {
     width: 80vw;
   }
   body .content .slider {
     width: 90vw;
+    margin-bottom: 50px;
   }
-  body .content .more-section svg {
+  body .more-section svg {
     top: -30px;
   }
-  body .content .more-section i {
+  body .more-section i {
     top: -15px;
   }
 }
