@@ -5,9 +5,7 @@ const date = document.getElementById('date');
 const desc = document.getElementById('desc');
 const slider = document.querySelector(".slider");
 
-let today = new Date().toLocaleDateString();
-let weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Monday', 'Saturday', 'Sunday'];
-let weekday = weekdays[new Date().getDay()-1];
+let weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Monday', 'Saturday'];
 
 let tempSection = document.getElementById('temp');
 //when the temperature is clicked => change the unit, also in the 'more' section
@@ -71,7 +69,12 @@ function setCurrentWeather(data){
     //set the location
     loc.textContent = `${data.name}, ${data.sys.country}`;
     //set the week day and the date
-    date.textContent = `${weekday} ${today}`;
+    console.log(data);
+    let today = new Date(data.dt*1000+(data.timezone*1000)).toLocaleDateString(navigator.language, {
+        timeZone: 'UTC'
+      });
+    let d = new Date(data.dt*1000+(data.timezone*1000)).getDay();
+    date.textContent = `${weekdays[d]} ${today}`;
     //description of the weather
     desc.textContent = currentWeather.main;
     //set the data in 'more' section
@@ -95,19 +98,22 @@ function setForecastWeather(){
     }).then(data => {
         //if there is data is not empty then set elements 
         slider.innerHTML = '';
-        if(data) data.list.map((d) => createCard(d))
+        if(data) data.list.map((d) => createCard(d, data.city.timezone))
     })
     .catch(e => {
         console.log('Fetch error: ' + e);
     })
 }
 
-function createCard(forecast){
-    const {main, weather} = forecast
-    let date = new Date(forecast.dt*1000).toLocaleDateString(navigator.language);
-    let time = new Date(forecast.dt*1000).toLocaleTimeString(navigator.language, {
+function createCard(forecast,timezone){
+    const {main, weather} = forecast;
+    let date = new Date(forecast.dt*1000+(timezone*1000)).toLocaleDateString(navigator.language, {
+        timeZone: 'UTC'
+      });
+    let time = new Date(forecast.dt*1000+(timezone*1000)).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
-        minute:'2-digit'
+        minute:'2-digit',
+        timeZone: 'UTC'
       });
     const card = document.createElement('div');
     card.classList.add("card");
@@ -125,13 +131,13 @@ function createCard(forecast){
     weatherDetails.innerHTML = `<h4 id="date">${date}</h4>
     <h4 id="date">${time}</h4>
     <div class="temp-section">
-        <h2 class="temperature" id="degree">${isCelsius ? Math.round(main.temp) + ' °C' : Math.round((main.temp * 1.8) + 32) + '°F'} </h2>
+        <h2 class="temperature" id="degree">${isCelsius ? Math.floor(main.temp) + '°C' : Math.floor((main.temp * 1.8) + 32) + '°F'} </h2>
     </div>
     <h4 id="desc">${weather[0].main}</h4>
     <div class="temp-section">
-        <h4 class="temperature" id="min">${isCelsius ? Math.round(main.temp_min) + ' °C' : Math.round((main.temp_min * 1.8) + 32) + '°F'}</h4>
+        <h4 class="temperature" id="min">${isCelsius ? Math.floor(main.temp_min) + '°C' : Math.floor((main.temp_min * 1.8) + 32) + '°F'}</h4>
         <h4> / </h4>
-        <h4 class="temperature" id="max">${ isCelsius ? Math.round(main.temp_max) + ' °C' : Math.round((main.temp_max * 1.8) + 32) + '°F'}</h4>
+        <h4 class="temperature" id="max">${ isCelsius ? Math.floor(main.temp_max) + '°C' : Math.floor((main.temp_max * 1.8) + 32) + '°F'}</h4>
     </div>`;
     card.appendChild(weatherDetails);
     slider.appendChild(card);
@@ -144,13 +150,15 @@ function setIcon(id, icon){
 }
 
 function fillInfo(data){
-    let sunrise = new Date(data.sys.sunrise*1000).toLocaleTimeString(navigator.language, {
+    let sunrise = new Date(data.sys.sunrise*1000+(data.timezone*1000)).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
-        minute:'2-digit'
+        minute:'2-digit',
+        timeZone: 'UTC'
       });
-      let sunset = new Date(data.sys.sunset*1000).toLocaleTimeString(navigator.language, {
+      let sunset = new Date(data.sys.sunset*1000+(data.timezone*1000)).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
-        minute:'2-digit'
+        minute:'2-digit',
+        timeZone: 'UTC'
       });
     let values = {"sunrise" : `${sunrise}`,
                 "sunset" : `${sunset} `,
@@ -196,19 +204,19 @@ function setTemperature(){
 
 function setCelsius(temperature){
     let t = temperature.textContent.split('°')[0];
-    temperature.textContent = Math.round((t - 32) * 0.5556) + '°C';
+    temperature.textContent = Math.floor((t - 32) * 0.5556) + '°C';
 }
 
 function setFarenheit(temperature){
     let t = temperature.textContent.split('°')[0];
-    temperature.textContent =  Math.round((t * 1.8) + 32) + '°F';
+    temperature.textContent =  Math.floor((t * 1.8) + 32) + '°F';
 }
 
 function setTempData(data, temps){
-    temps["degree"].textContent = isCelsius ? Math.round(data.temp) + ' °C' : Math.round((data.temp * 1.8) + 32) + '°F';
-    temps["min"].textContent = isCelsius ? Math.round(data.temp_min) + ' °C' : Math.round((data.temp_min * 1.8) + 32) + '°F';
-    temps["max"].textContent = isCelsius ? Math.round(data.temp_max) + ' °C' : Math.round((data.temp_max * 1.8) + 32) + '°F';
-    temps["feelslike"].textContent = isCelsius ? Math.round(data.feels_like) + ' °C' : Math.round((data.feels_like * 1.8) + 32) + '°F';
+    temps["degree"].textContent = isCelsius ? Math.floor(data.temp) + ' °C' : Math.floor((data.temp * 1.8) + 32) + '°F';
+    temps["min"].textContent = isCelsius ? Math.floor(data.temp_min) + ' °C' : Math.floor((data.temp_min * 1.8) + 32) + '°F';
+    temps["max"].textContent = isCelsius ? Math.floor(data.temp_max) + ' °C' : Math.floor((data.temp_max * 1.8) + 32) + '°F';
+    temps["feelslike"].textContent = isCelsius ? Math.floor(data.feels_like) + ' °C' : Math.floor((data.feels_like * 1.8) + 32) + '°F';
 }
 
 let title = document.querySelector('.title');
